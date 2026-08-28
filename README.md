@@ -1,6 +1,6 @@
 # Klima-Velotour Paris
 
-Private Fahrrad-Stadtführung durch Paris (halber Tag, Start am Hotel PiaPia + 8 Stationen) zu Klimaschutz, Klimaanpassung und nachhaltigem Wirtschaften — für eine Reise mit meinem Vater, Anfang September 2026.
+Private Fahrrad-Stadtführung durch Paris (halber Tag, Start am Hotel PiaPia + 8 Stationen) zu Klimaschutz, Klimaanpassung und nachhaltigem Wirtschaften — für eine Reise Anfang September 2026.
 
 Ein einziges self-contained `index.html` — kein Build-Schritt, keine Abhängigkeiten. Läuft direkt im Handy-Browser, auch wichtig, da die Seite unterwegs auf dem Velo genutzt wird.
 
