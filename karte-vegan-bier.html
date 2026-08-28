@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vegan & Bier — Paris</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+  :root {
+    --green: #2e7d32;
+    --amber: #b8860b;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --bg: #fdfdfb;
+    --card-bg: #ffffff;
+    --border: #e2e2de;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink);
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--green), var(--amber));
+    color: #fff;
+    padding: 1.1rem 1.2rem 0.9rem;
+    text-align: center;
+    position: relative;
+    z-index: 500;
+  }
+  header.hero h1 { margin: 0 0 0.2rem; font-size: 1.35rem; }
+  header.hero p { margin: 0; opacity: 0.95; font-size: 0.85rem; }
+
+  #map { position: absolute; top: 64px; left: 0; right: 0; bottom: 0; }
+
+  .legend {
+    position: absolute; top: 74px; right: 10px; z-index: 400;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .legend div { display: flex; align-items: center; gap: 0.4rem; margin: 0.15rem 0; }
+  .legend i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  .pin-vegan { background: var(--green); }
+  .pin-beer { background: var(--amber); }
+
+  .popup-title { font-weight: 700; font-size: 1rem; margin: 0 0 0.2rem; }
+  .popup-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.03em; padding: 0.15rem 0.5rem; border-radius: 999px; color: #fff; margin-bottom: 0.35rem;
+  }
+  .popup-desc { font-size: 0.85rem; margin: 0.3rem 0 0.5rem; color: var(--ink-soft); }
+  .popup-link {
+    display: inline-block; font-size: 0.8rem; font-weight: 600;
+    color: #fff; background: #34a853; text-decoration: none;
+    padding: 0.35rem 0.7rem; border-radius: 8px;
+  }
+
+  .leaflet-div-icon { background: transparent; border: none; }
+  .marker-dot {
+    width: 22px; height: 22px; border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🥗🍺 Vegan & Bier — Paris</h1>
+  <p>Vegane Restaurants & gemütliche Bierlokale, zum Antippen für Route/Öffnungszeiten</p>
+  <p style="margin-top:0.3rem;"><a href="index.html" style="color:#fff;">← zur Klima-Velotour</a></p>
+</header>
+
+<div id="map"></div>
+<div class="legend">
+  <div><i class="pin-vegan"></i> Vegan</div>
+  <div><i class="pin-beer"></i> Bier</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  const veganSpots = [
+    { name: "Daimant Saint-Honoré", lat: 48.8664566, lon: 2.3320026, addr: "24 Place du Marché Saint-Honoré, 75001", desc: "Elegante kleine Teller, feine Aromenkombinationen, gleich beim Louvre." },
+    { name: "Maslow 1er", lat: 48.8581541, lon: 2.3443239, addr: "14 Quai de la Mégisserie, 75001", desc: "Vegetarisch-vegane Tapas mit Seine-Blick, u.a. koreanischer Blumenkohl." },
+    { name: "Urban Greener", lat: 48.8865376, lon: 2.3455140, addr: "30 Rue Muller, 75018", desc: "Französisch geprägte Küche in Montmartre, bekannt für Seitan und veganes Foie Gras — nah an Station 8 (La Caverne)." },
+    { name: "Jah Jah", lat: 48.8731935, lon: 2.3530663, addr: "11 Rue des Petites Écuries, 75010", desc: "Afro-karibische Bowls: Bohnen, Kochbanane, Tofu, Getreide — leichte Küche." },
+    { name: "Mesa", lat: 48.8811485, lon: 2.3401281, addr: "68 Rue des Martyrs, 75009", desc: "Hotelrestaurant, Pancakes/Avocado-Toast zum Frühstück, kreatives Abendmenü." },
+    { name: "Cloud Cakes", lat: 48.8656446, lon: 2.3463067, addr: "6 Rue Mandar, 75002", desc: "Veganes Café, French Toast und Grilled Cheese — vor allem die Macarons sollen aussergewöhnlich sein." },
+    { name: "B.Better", lat: 48.8535693, lon: 2.3644401, addr: "26 Rue Beautreillis, 75004", desc: "BBQ-Tex-Mex-Fusion, grosse Portionen, Signature-Gericht: Pilz-\"Oktopus\" — mitten im Marais, nah an Stationen 2–4." }
+  ];
+
+  const beerSpots = [
+    { name: "La Fine Mousse", lat: 48.8648418, lon: 2.3818083, addr: "6 Avenue Jean Aicard, 75011", desc: "Holztische, freigelegte Ziegelwände, 20 Zapfhähne, fast nur französische Craft-Brauereien." },
+    { name: "Aux Deux Amis", lat: 48.8645844, lon: 2.3718765, addr: "45 Rue Oberkampf, 75011", desc: "Kleines Nachbarschaftslokal, poliertem Kupfertresen, seit Jahren für Craft-Bier und gute Tapas bekannt." },
+    { name: "BAPBAP", lat: 48.8636695, lon: 2.3786793, addr: "79 Rue Saint-Maur, 75011", desc: "Eigene Mikrobrauerei mit Taproom direkt daneben — frische Pale Ales und IPAs vom Fass." },
+    { name: "Le Supercoin", lat: 48.8930625, lon: 2.3505607, addr: "17 Rue Boinod, 75018", desc: "Schrullige Bar mit 12–15 wechselnden Fassbieren, Punkmusik — nah an Montmartre/Station 8." },
+    { name: "Le Plan B", lat: 48.8489962, lon: 2.2907357, addr: "28 Rue de Lourmel, 75015", desc: "Kleine, sehr gemütliche Bar, ca. 10 Zapfhähne, eigene Biere plus wechselnde Gäste aus aller Welt." }
+  ];
+
+  const map = L.map('map', { zoomControl: true }).setView([48.868, 2.355], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende'
+  }).addTo(map);
+
+  function makeIcon(colorVar) {
+    return L.divIcon({
+      className: 'leaflet-div-icon',
+      html: `<div class="marker-dot" style="background:${colorVar}"></div>`,
+      iconSize: [22, 22],
+      iconAnchor: [11, 22],
+      popupAnchor: [0, -20]
+    });
+  }
+  const veganIcon = makeIcon('#2e7d32');
+  const beerIcon = makeIcon('#b8860b');
+
+  function addSpots(spots, icon, tagLabel, tagColor, mapsQueryPrefix) {
+    spots.forEach(s => {
+      const gmaps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.addr + ", Paris");
+      const popupHtml = `
+        <div class="popup-title">${s.name}</div>
+        <span class="popup-tag" style="background:${tagColor}">${tagLabel}</span>
+        <div class="popup-desc">${s.desc}<br><em>${s.addr}</em></div>
+        <a class="popup-link" href="${gmaps}" target="_blank" rel="noopener">📍 In Google Maps öffnen</a>
+      `;
+      L.marker([s.lat, s.lon], { icon }).addTo(map).bindPopup(popupHtml);
+    });
+  }
+
+  addSpots(veganSpots, veganIcon, "Vegan", "#2e7d32");
+  addSpots(beerSpots, beerIcon, "Bier", "#b8860b");
+</script>
+
+</body>
+</html>

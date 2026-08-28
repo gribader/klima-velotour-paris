@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klima-Velotour Paris</title>
+<style>
+  :root {
+    --green: #2e7d32;
+    --blue: #1565c0;
+    --orange: #e65100;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --bg: #fdfdfb;
+    --card-bg: #ffffff;
+    --border: #e2e2de;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: #fff;
+    padding: 2.2rem 1.2rem 1.8rem;
+    text-align: center;
+  }
+  header.hero h1 { margin: 0 0 0.3rem; font-size: 1.7rem; }
+  header.hero p { margin: 0.2rem 0 0; opacity: 0.95; font-size: 1rem; }
+
+  main { max-width: 720px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+
+  .overview {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.3rem;
+    margin: 1.2rem 0 1.8rem;
+  }
+  .overview h2 { margin-top: 0; font-size: 1.15rem; }
+  .overview ol { padding-left: 1.2rem; margin: 0.6rem 0; }
+  .overview li { margin: 0.25rem 0; }
+  .overview li a { color: var(--ink); text-decoration: none; }
+  .overview li a:hover { text-decoration: underline; }
+
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0.3rem 0.4rem 0.3rem 0;
+  }
+  .btn-map { background: #34a853; color: #fff; }
+  .btn-secondary { background: #f0f0ec; color: var(--ink); }
+
+  .station {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem 1.3rem 1.5rem;
+    margin: 1.6rem 0;
+    scroll-margin-top: 1rem;
+  }
+  .station-num {
+    display: inline-block;
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    text-align: center;
+    line-height: 2rem;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+  .station h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+  .tag-schutz { background: var(--green); }
+  .tag-anpassung { background: var(--blue); }
+  .tag-wirtschaft { background: var(--orange); }
+
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0.9rem 0;
+    background: #000;
+  }
+  .video-wrap iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+  .video-note { font-size: 0.85rem; color: var(--ink-soft); margin-top: -0.4rem; margin-bottom: 0.8rem; }
+
+  .critical p.label {
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .critical {
+    background: #fdf3ea;
+    border-left: 4px solid var(--orange);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin: 0.9rem 0;
+    font-size: 0.95rem;
+  }
+
+  .next-link {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .next-link:hover { text-decoration: underline; }
+
+  .synthesis {
+    background: linear-gradient(135deg, #fff8e1, #fdfdfb);
+    border: 2px dashed #e0c068;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .caption { font-size: 0.85rem; color: var(--ink-soft); }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0.9rem 0;
+  }
+  .compare figure {
+    margin: 0;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+  }
+  .compare img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+  }
+  .compare figcaption {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+  }
+  .compare-credit {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin: -0.4rem 0 0.8rem;
+  }
+  .photo-single {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0.9rem 0 0.3rem;
+    display: block;
+  }
+
+  .intro-block {
+    background: linear-gradient(135deg, #fdf3ea, #fdfdfb);
+    border: 2px dashed #e0c068;
+  }
+  .chart-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.8rem 0.8rem 0.5rem;
+    margin: 0.9rem 0;
+  }
+  .chart-box svg { width: 100%; height: auto; display: block; }
+  .chart-legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0.3rem 0 0;
+  }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .chart-legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+  .quote {
+    font-style: italic;
+    border-left: 3px solid var(--ink-soft);
+    padding-left: 0.8rem;
+    margin: 0.7rem 0;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🚲 Klima-Velotour Paris</h1>
+  <p>Ein halber Tag, acht Stationen, ein Gespräch mit Papa darüber, woran ich eigentlich arbeite</p>
+</header>
+
+<main>
+
+  <div class="overview">
+    <h2>Überblick</h2>
+    <p>Start am Hotel PiaPia im 20e, dann acht Stationen zu Klimaschutz, Klimaanpassung und nachhaltigem Wirtschaften — in einem grossen Bogen quer durch die Stadt bis an den Fuss von Montmartre. Rechnet pro Station eher 15–20 Minuten als lange Pausen ein, dann geht sich das an einem entspannten Nachmittag aus.</p>
+    <a class="btn btn-map" href="https://www.google.com/maps/dir/?api=1&origin=14%20Rue%20des%20Maraichers%2C%2075020%20Paris&destination=Place%20Jules%20Joffrin%2C%2075018%20Paris&waypoints=Rue%20de%20Rivoli%2C%2075004%20Paris%7CPlace%20de%20l%27Hotel%20de%20Ville%2C%2075004%20Paris%7CPont%20Louis-Philippe%2C%2075004%20Paris%7CPont%20Marie%2C%2075004%20Paris%7CSquare%20Marie%20Curie%2C%2075013%20Paris%7C34%20Boulevard%20Kellermann%2C%2075013%20Paris%7C4%20Rue%20Keller%2C%2075011%20Paris%7CParking%20Raymond%20Queneau%2C%2075018%20Paris&travelmode=bicycling" target="_blank" rel="noopener">📍 Ganze Route in Google Maps öffnen</a>
+    <p class="caption">Die Videos sind alle auf Französisch — falls das zu viel ist: YouTube-Untertitel (CC-Symbol) anschalten und auf Deutsch automatisch übersetzen lassen.</p>
+    <p class="caption"><strong>Zur Velo-Infrastruktur, ehrlich:</strong> Vom Hotel (20e) zu Station 1 (Rivoli, 1e) ist die Radweg-Abdeckung <strong>nicht geprüft</strong> — neu dazugekommen, nicht mehr recherchiert. Stationen 1–5 laufen danach über gut ausgebaute Achsen (Rivoli, Seine-Ufer inkl. Voie Georges Pompidou). Zwischen Station 5 und 7 (Bassin d'Austerlitz → Petite Ceinture → École Keller) ist die Abdeckung ebenfalls nicht bestätigt. Zwischen Station 7 und 8 (École Keller → La Caverne, via Canal Saint-Martin) ist es wieder gut. Am Tag selbst also für die zwei unsicheren Teilstücke die Live-Navigation nutzen, nicht blind dem vorgeplanten Link folgen. Der Aufstieg nach Montmartre ist bewusst nicht mehr Teil der Route — dazu unten mehr.</p>
+    <ol>
+      <li><a href="#hintergrund">Hintergrund: Anne Hidalgo und die Kehrseite</a></li>
+      <li><a href="#start">Start: Hotel PiaPia</a></li>
+      <li><a href="#station-1">Rue de Rivoli — die Velo-Hauptachse</a></li>
+      <li><a href="#station-2">Forêt urbaine Hôtel de Ville — Stadtwald vorm Rathaus</a></li>
+      <li><a href="#station-3">Voie Georges Pompidou — die Autobahn, die verschwand</a></li>
+      <li><a href="#station-4">Seine bei Notre-Dame — wieder schwimmbar</a></li>
+      <li><a href="#station-5">Bassin d'Austerlitz — die unsichtbare Klimaanpassung</a></li>
+      <li><a href="#station-6">Petite Ceinture — die Stadt, die nichts tat</a></li>
+      <li><a href="#station-7">École Keller — Cour Oasis</a></li>
+      <li><a href="#station-8">La Caverne — Pilze aus der Tiefgarage</a></li>
+      <li><a href="#synthese">Café-Abschluss — das grosse Bild</a></li>
+    </ol>
+  </div>
+
+  <!-- HINTERGRUND -->
+  <section class="station intro-block" id="hintergrund">
+    <h2><span class="station-num">🏛️</span>Anne Hidalgo und die Kehrseite</h2>
+    <p>Bevor es losgeht, kurz zu der Frau, um die die ganze Tour eigentlich kreist: <strong>Anne Hidalgo</strong>, Sozialistin (in Deutschland würde man Sozialdemokratin sagen), seit 2014 Bürgermeisterin von Paris, 2020 wiedergewählt, seit sechs Jahren auch Vorsitzende der C40-Klima-Allianz der 100 grössten Städte weltweit. International gilt sie als eine der bekanntesten Vorkämpferinnen für autoarme, grüne Städte — ihr Konzept der "15-Minuten-Stadt" wurde vielfach kopiert. Lokal ist sie umstritten, gerade bei Vorstädter:innen und politischen Gegnern, die ihr vorwerfen, Autofahrende zu bestrafen; die 15-Minuten-Stadt hat sie sogar in Verschwörungstheorien verwickelt. Ihre Amtszeit endet mit der Bürgermeisterwahl im März 2026 — ihr ehemaliger Vize Emmanuel Grégoire holte im ersten Wahlgang die meisten Stimmen.</p>
+    <p>Die Bilanz, die diese Tour zeigt — autofreie Rivoli, verschwundene Uferschnellstrasse, Stadtwälder, schwimmbare Seine, 1'400 km Velowege, 213'000 neue Bäume seit 2014, 24'000 abgebaute Parkplätze — ist real und international vielbeachtet. Aber sie hat eine Kehrseite, die auf keiner der folgenden Stationen sichtbar wird.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/udCk46sViH8" title="Paris' mutige Massnahmen, um die Stadt fussgänger- und fahrradfreundlicher zu machen — DW REV" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">DW REV (Deutsche Welle), Deutsch — Dokumentation, die genau diese Spannung zwischen Innenstadt-Erfolg und Vorstadt-Realität zeigt.</p>
+
+    <div class="critical">
+      <p class="label">Zum Nachdenken: Wer zahlt für die Verkehrswende?</p>
+      <p>Wer sich die Innenstadt nicht mehr leisten kann, zieht ins Umland — wo der ÖV historisch schlechter ausgebaut ist und man für den Arbeitsweg oft aufs Auto oder Motorrad angewiesen bleibt. Gleichzeitig macht dieselbe Politik, die die Innenstadt lebenswerter macht, das Autofahren dorthin laufend teurer: 24'000 Parkplätze weg seit 2020 (weitere Zehntausende auf 500 Strassen geplant), Parkgebühren für SUV/grosse Autos seit September 2024 auf 18 €/Stunde verdreifacht, mehr Tempo-30-Zonen. Der Ausbau des Grand Paris Express (68 neue Metro-Stationen, 200 km neue Strecken) soll die Vorstädte ans Netz anschliessen — ist aber grösstenteils erst im Bau, fertig frühestens 2031.</p>
+    </div>
+
+    <div class="chart-box">
+      <p style="margin:0 0 0.4rem;font-weight:700;font-size:0.95rem;">Mieten: Paris zieht seit 2000 stark davon</p>
+      <svg viewBox="0 0 320 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Liniendiagramm: Veränderung der Wohnkosten seit 2000 in Prozent, Paris gegenüber Vorstädten">
+        <line x1="40" y1="140" x2="300" y2="140" stroke="#e2e2de" stroke-width="1"/>
+        <line x1="40" y1="96.7" x2="300" y2="96.7" stroke="#e2e2de" stroke-width="1"/>
+        <line x1="40" y1="53.3" x2="300" y2="53.3" stroke="#e2e2de" stroke-width="1"/>
+        <line x1="40" y1="10" x2="300" y2="10" stroke="#e2e2de" stroke-width="1"/>
+        <text x="36" y="143" font-size="8" fill="#4a4a4a" text-anchor="end">0%</text>
+        <text x="36" y="99.7" font-size="8" fill="#4a4a4a" text-anchor="end">100</text>
+        <text x="36" y="56.3" font-size="8" fill="#4a4a4a" text-anchor="end">200</text>
+        <text x="36" y="13" font-size="8" fill="#4a4a4a" text-anchor="end">+300%</text>
+        <text x="40" y="150" font-size="8" fill="#4a4a4a">2000</text>
+        <text x="140" y="150" font-size="8" fill="#4a4a4a">2012</text>
+        <text x="290" y="150" font-size="8" fill="#4a4a4a">2025</text>
+        <polyline points="40,140 71.2,116.2 102.4,98.8 123.2,96.7 144,103.2 164.8,88 185.6,88.9 206.4,83.7 227.2,77.2 248,66.3 268.8,55.5 279.2,62 300,68.5" fill="none" stroke="#9a9a94" stroke-width="2.5"/>
+        <polyline points="40,140 71.2,114 102.4,96.7 123.2,92.3 144,101 164.8,62 185.6,64.2 206.4,59.8 227.2,53.3 248,40.3 268.8,14.3 279.2,27.3 300,40.3" fill="none" stroke="#e65100" stroke-width="2.5"/>
+      </svg>
+      <div class="chart-legend">
+        <span><i style="background:#e65100"></i>Paris</span>
+        <span><i style="background:#9a9a94"></i>Vorstädte (Ø)</span>
+      </div>
+      <p class="compare-credit">Grob nachgezeichnet nach Bloomberg CityLab / Jacques Friggit, IGEDD — keine exakten Werte, zeigt aber den realen Trend.</p>
+    </div>
+
+    <div class="chart-box">
+      <p style="margin:0 0 0.4rem;font-weight:700;font-size:0.95rem;">Bevölkerung: Paris schrumpft, die Vorstadt wächst</p>
+      <svg viewBox="0 0 320 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Liniendiagramm: Bevölkerungsentwicklung Paris gegenüber Seine-Saint-Denis seit 1970">
+        <line x1="40" y1="140" x2="300" y2="140" stroke="#e2e2de" stroke-width="1"/>
+        <line x1="40" y1="88" x2="300" y2="88" stroke="#e2e2de" stroke-width="1"/>
+        <line x1="40" y1="36" x2="300" y2="36" stroke="#e2e2de" stroke-width="1"/>
+        <text x="36" y="143" font-size="8" fill="#4a4a4a" text-anchor="end">0</text>
+        <text x="36" y="91" font-size="8" fill="#4a4a4a" text-anchor="end">1.0M</text>
+        <text x="36" y="39" font-size="8" fill="#4a4a4a" text-anchor="end">2.0M</text>
+        <text x="40" y="150" font-size="8" fill="#4a4a4a">1970</text>
+        <text x="181" y="150" font-size="8" fill="#4a4a4a">2000</text>
+        <text x="290" y="150" font-size="8" fill="#4a4a4a">2025</text>
+        <polyline points="40,75 87.3,71.4 134.5,68.2 181.8,67.2 229.1,62 252.7,59.4 276.4,56.8 300,54.2" fill="none" stroke="#1565c0" stroke-width="2.5"/>
+        <polyline points="40,10 87.3,33.4 134.5,33.4 181.8,33.4 229.1,25.6 252.7,25.6 276.4,33.4 300,36" fill="none" stroke="#e65100" stroke-width="2.5"/>
+      </svg>
+      <div class="chart-legend">
+        <span><i style="background:#e65100"></i>Paris (Stadt)</span>
+        <span><i style="background:#1565c0"></i>Seine-Saint-Denis</span>
+      </div>
+      <p class="compare-credit">Grob nachgezeichnet nach Bloomberg CityLab / Insee — keine exakten Werte, zeigt aber den realen Trend.</p>
+    </div>
+
+    <div class="quote">"Bislang fehlt in Hidalgos Paris der Ausgleich für die Ärmsten, etwa günstige Tickets für den Nahverkehr und vor allem bezahlbarer Wohnraum." <span style="font-style:normal;">— taz</span></div>
+    <div class="quote">Eine Vorstädterin über Hidalgo: sie könne sich nicht vorstellen, wie schwer es sei, mit dem Landbus zur Arbeit zu kommen — für Landwirtinnen, Verkäufer und Pflegekräfte gilt Hidalgo als "abgehobene Frau aus Paris". <span style="font-style:normal;">— taz</span></div>
+    <p>Historischer Vergleichspunkt: Die Gelbwesten-Proteste 2019 richteten sich unter anderem gegen steigende Dieselpreise und blockierten Pariser Brücken — ein früher Vorbote genau dieses Konflikts zwischen Klimapolitik und denen, die sie am wenigsten abfedern kann.</p>
+    <p class="video-note">Weiterlesen: <a href="https://taz.de/Anne-Hidalgo-und-die-Fahrradstadt-Paris/!5826592/" target="_blank" rel="noopener">taz.de – Notre Anne von Paris</a> · <a href="https://www.bloomberg.com/graphics/2026-paris-transformed-hidalgo/" target="_blank" rel="noopener">Bloomberg CityLab – This Paris Tour Reveals How Hidalgo Made City Greener, More Car-Free</a></p>
+
+    <a class="next-link" href="#start">Weiter zum Start →</a>
+  </section>
+
+  <!-- START -->
+  <section class="station" id="start">
+    <h2><span class="station-num">🏨</span>Start: Hotel PiaPia</h2>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=14%20Rue%20des%20Maraichers%2C%2075020%20Paris" target="_blank" rel="noopener">📍 Hotel öffnen</a></p>
+    <p>14 Rue des Maraîchers, 75020 Paris — nahe Nation/Père Lachaise, im Osten der Stadt. Die Route führt von hier über den 1./4./13./11./18. Arrondissement bis nach Montmartre, quer durch fast die ganze Stadt.</p>
+    <p><strong>Nächstgelegene Vélib'-Station: "Pyrénées - Avron"</strong>, direkt an der Adresse 73 Rue des Pyrénées, 75020 Paris. Über die offizielle Vélib'-Live-Daten (GBFS-Feed) verifiziert: existiert, ist in Betrieb, 32 Docks wie vermutet. Wie viele Räder gerade frei stehen, schwankt natürlich stündlich — das kurz vor Abfahrt in der Vélib'-App checken.</p>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=73%20Rue%20des%20Pyrenees%2C%2075020%20Paris" target="_blank" rel="noopener">📍 Vélib'-Station öffnen</a></p>
+    <div class="critical">
+      <p class="label">Ungeprüft</p>
+      <p>Die Strecke vom Hotel zu Station 1 (Rue de Rivoli, ca. 5–6 km westwärts quer durch die Stadt) wurde nicht auf durchgehende Velo-Infrastruktur geprüft, anders als der Rest der Route. Am Tourtag live navigieren.</p>
+    </div>
+    <a class="next-link" href="#station-1">Weiter zu Station 1 →</a>
+  </section>
+
+  <!-- STATION 1 -->
+  <section class="station" id="station-1">
+    <h2><span class="station-num">1</span>Rue de Rivoli</h2>
+    <span class="tag tag-schutz">Klimaschutz</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Rue%20de%20Rivoli%2C%2075004%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Bis vor wenigen Jahren eine vierspurige Autostrasse mitten durch Paris — heute die meistbefahrene Velo-Achse der Stadt, seit 2024 dauerhaft autofrei. Zusammen mit Vélib' (rund 20'000 Leihräder in der ganzen Stadt) zeigt das: Verkehrswende ist hier keine Zukunftsvision mehr, sie ist schon passiert.</p>
+    <div class="compare">
+      <figure>
+        <figcaption>Vorher</figcaption>
+        <img src="https://i.ytimg.com/vi/zlWHEB3Mcvg/hqdefault.jpg" loading="lazy" alt="Rue de Rivoli 1971, verstopft mit Autos">
+      </figure>
+      <figure>
+        <figcaption>Nachher</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pistes%20cyclables%20temporaires%20Covid%2019%20Rue%20de%20Rivoli.jpg" loading="lazy" alt="Rue de Rivoli mit Velofahrenden, kaum Autoverkehr">
+      </figure>
+    </div>
+    <p class="compare-credit">Fotos: Reportage-Standbild 1971 (Ville de Paris) · VVVCFFrance / Wikimedia Commons (CC BY-SA 4.0)</p>
+    <p class="video-note">Kein passendes kurzes Video gefunden — stattdessen ein Artikel zum Nachlesen/Vorlesen: <a href="https://www.sortiraparis.com/en/news/in-paris/articles/219085-rue-de-rivoli-bikeway-is-now-permanent-cars-banned" target="_blank" rel="noopener">Rue de Rivoli bikeway is now permanent (sortiraparis.com, EN)</a></p>
+    <a class="next-link" href="#station-2">Weiter zu Station 2 →</a>
+  </section>
+
+  <!-- STATION 2 -->
+  <section class="station" id="station-2">
+    <h2><span class="station-num">2</span>Forêt urbaine Hôtel de Ville</h2>
+    <span class="tag tag-anpassung">Klimaanpassung</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Place%20de%20l%27Hotel%20de%20Ville%2C%2075004%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Seit 2024 steht auf dem Vorplatz des Pariser Rathauses ein 2'500 m² grosser "Stadtwald": rund 50 grosse Bäume und über 20'000 Pflanzen, dicht gepflanzt nach der japanischen Miyawaki-Methode. Soll kühlen, Schatten spenden, Hitzeinseln mindern — die historischen Brunnen wurden bewusst mit einbezogen statt entfernt.</p>
+    <div class="compare">
+      <figure>
+        <figcaption>Vorher</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Paris_Parvis_de_l%E2%80%99h%C3%B4tel_de_ville_MB.jpg" loading="lazy" alt="Komplett kahler, gepflasterter Vorplatz ohne einen einzigen Baum, 2020">
+      </figure>
+      <figure>
+        <figcaption>Nachher</figcaption>
+        <img src="https://cdn.paris.fr/paris/2025/07/18/original-524fd2647a1b21522c551e0befc966ee.jpg" loading="lazy" alt="Dichtes Grün mit Sitzbänken, Sommer 2025">
+      </figure>
+    </div>
+    <p class="compare-credit">Fotos: Marc Baronnet, Wikimedia Commons (CC BY-SA 4.0) · Ville de Paris</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/JL_NhnFA7WY" title="Découvrez la forêt urbaine de l'Hôtel de Ville — Ville de Paris" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Offizielles Video der Stadt Paris, Französisch.</p>
+    <div class="critical">
+      <p class="label">Zum Nachdenken</p>
+      <p>Forscher (INRAE) sind skeptisch: Von den dicht gepflanzten Jungbäumen überlebt langfristig nur ein Bruchteil, die Wachstums- und Biodiversitäts-Versprechen der Methode sind kaum wissenschaftlich belegt — und selbst wenn Paris alle 170'000 bis 2026 geplanten Bäume so pflanzen würde, wären das nur ~5 Hektar von 10'500 Hektar Stadtfläche.</p>
+    </div>
+    <a class="next-link" href="#station-3">Weiter zu Station 3 →</a>
+  </section>
+
+  <!-- STATION 3 -->
+  <section class="station" id="station-3">
+    <h2><span class="station-num">3</span>Voie Georges Pompidou</h2>
+    <span class="tag tag-schutz">Klimaschutz</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Pont%20Louis-Philippe%2C%2075004%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Bis 2016/17 verlief hier eine der wichtigsten Ost-West-Schnellstrassen von Paris: 2 Meilen (~3,2 km) Seine-Ufer, 43'000 Autos pro Tag, mitten durch einen Unesco-Weltkulturerbe-Abschnitt und direkt am Louvre vorbei. Heute liegt hier eine durchgehende Fuss- und Velopromenade — kein Feldversuch, sondern seit fast einem Jahrzehnt Normalzustand.</p>
+    <div class="compare">
+      <figure>
+        <figcaption>Vorher</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Paris_75001_Voie_Georges-Pompidou_Quai_du_Louvre_Pont_Neuf_20090327_(2).jpg" loading="lazy" alt="Stau auf der Voie Georges Pompidou beim Pont Neuf, 2009">
+      </figure>
+      <figure>
+        <figcaption>Nachher</figcaption>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Voie_Georges-Pompidou%2C_Paris_4e_1.jpg" loading="lazy" alt="Dieselbe Uferstrasse als autofreie Promenade mit Sonnenschirmen">
+      </figure>
+    </div>
+    <p class="compare-credit">Fotos: Bernard Bolter (CC BY 2.0) · Polymagou (CC BY-SA 4.0), beide Wikimedia Commons</p>
+    <p class="video-note">Kein kurzes Video gefunden — Hintergrund zum Nachlesen: <a href="https://reporterre.net/A-Paris-liberee-des-autos-la-voie-sur-berge-enchante-pietons-et-riverains" target="_blank" rel="noopener">reporterre.net (FR)</a></p>
+    <div class="critical">
+      <p class="label">Zum Nachdenken</p>
+      <p>Der Umbau war lange umstritten: Eine Untersuchung befürchtete, der Verkehr werde nur auf andere Strassen verlagert statt reduziert, und ein Gericht stoppte das Projekt zeitweise wegen Mängeln in der Umweltverträglichkeitsprüfung. Am Ende gaben kulturelle und ästhetische Argumente den Ausschlag, nicht primär die Verkehrsbilanz — eine Ambivalenz, die zum Gespräch mit Papa passt.</p>
+    </div>
+    <a class="next-link" href="#station-4">Weiter zu Station 4 →</a>
+  </section>
+
+  <!-- STATION 4 -->
+  <section class="station" id="station-4">
+    <h2><span class="station-num">4</span>Seine bei Notre-Dame</h2>
+    <span class="tag tag-anpassung">Klimaanpassung</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Pont%20Marie%2C%2075004%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Seit Sommer 2025 darf man in der Seine wieder offiziell schwimmen — nach über 100 Jahren Verbot. Möglich gemacht hat das eine ~1,4-Milliarden-Euro-Investition in Abwasserinfrastruktur, angestossen von der Olympia-Bewerbung 2024, nicht primär von Klimapolitik.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/lxdySMq8As4" title="Les Parisiens retrouvent le plaisir de se baigner dans la Seine — FRANCE 24" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">FRANCE 24, Französisch, Reportage-Format.</p>
+    <a class="next-link" href="#station-5">Weiter zu Station 5 →</a>
+  </section>
+
+  <!-- STATION 5 -->
+  <section class="station" id="station-5">
+    <h2><span class="station-num">5</span>Bassin d'Austerlitz</h2>
+    <span class="tag tag-anpassung">Klimaanpassung</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Square%20Marie%20Curie%2C%2075013%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Unter dem Square Marie-Curie liegt seit 2024 ein Regenwasser-Rückhaltebecken: 50 m Durchmesser, 30 m tief, 50'000 m³ Fassungsvermögen — komplett unter der Erde. Man sieht buchstäblich nichts davon. Genau das ist die Pointe dieser Station.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/zFaQz8MbeGA" title="Bassin d'Austerlitz : la cathédrale souterraine — Ville de Paris" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Offizielles Video der Stadt Paris, Französisch — zeigt das Bauwerk von innen, das man vor Ort nicht sehen kann.</p>
+    <a class="next-link" href="#station-6">Weiter zu Station 6 →</a>
+  </section>
+
+  <!-- STATION 6 -->
+  <section class="station" id="station-6">
+    <h2><span class="station-num">6</span>Petite Ceinture (13e)</h2>
+    <span class="tag tag-schutz">Klimaschutz</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=34%20Boulevard%20Kellermann%2C%2075013%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Die alte Pariser Ringbahn, seit den 1930er-Jahren grösstenteils stillgelegt — auf diesem Stück (Jardin de la Poterne des Peupliers, Zugang auch über die Rue Damesme) hat die Stadt nichts gebaut, sondern die Bahntrasse einfach der Natur überlassen. Über 200 Pflanzen- und 70 Tierarten haben sich seither auf den alten Gleisen angesiedelt — mitten in der Stadt. Freier Zugang, aber vermutlich nicht befahrbar: Velos am Eingang abstellen und das kurze Stück zu Fuss gehen.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/_wUDsUx-e5w" title="La Petite ceinture : un écosystème sauvage à Paris — Brut" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Brut, Französisch, kurzes Reportage-Format.</p>
+    <a class="next-link" href="#station-7">Weiter zu Station 7 →</a>
+  </section>
+
+  <!-- STATION 7 -->
+  <section class="station" id="station-7">
+    <h2><span class="station-num">7</span>École Keller — Cour Oasis</h2>
+    <span class="tag tag-anpassung">Klimaanpassung</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=4%20Rue%20Keller%2C%2075011%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Ein entsiegelter, begrünter Schulhof statt Asphalt — Hitzeschutz für Kinder, Teil von Paris' "Cours Oasis"-Programm (203 Schulhöfe seit 2017, Ziel 360 bis 2030). Nur <strong>samstags 10–19 Uhr</strong> öffentlich zugänglich.</p>
+    <img class="photo-single" src="https://cdn.paris.fr/paris/2023/08/09/original-09f45e8d06974d5625180faf43e44ffb.jpg" loading="lazy" alt="Begrünter Innenhof der École Keller mit Holzdeck statt Asphalt">
+    <p class="compare-credit">Foto: Ville de Paris — echtes Foto dieser Schule, aber kein Vorher-Bild verfügbar.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/D-j7rMwsn6Y" title="Désimperméabilisation des cours, un cas d'école" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Allgemeines Video zum Cours-Oasis-Programm, nicht speziell zu dieser Schule — kein besserer standortspezifischer Clip gefunden. Alternative Sammlung: <a href="https://www.caue75.fr/content/les-cours-oasis-en-videos" target="_blank" rel="noopener">caue75.fr – Les cours Oasis en vidéos</a></p>
+
+    <p><strong>Der Bogen zur 15-Minuten-Stadt:</strong> Schulhöfe wie dieser sind kein Nebenschauplatz, sondern einer der sechs Kernbausteine, die Stadtplaner Carlos Moreno (Erfinder des Konzepts, in enger Zusammenarbeit mit Hidalgos Stadtverwaltung) für die 15-Minuten-Stadt definiert hat: Alles zum Leben — wohnen, arbeiten, versorgen, bilden, ärztlich behandeln lassen, sich entfalten — in einer Viertelstunde zu Fuss oder mit dem Velo erreichbar. Verkehrsberuhigte Strassen rund um Schulen gelten dabei als einer der wichtigsten Bausteine.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/udCk46sViH8?start=920&end=1027" title="15-Minuten-Stadt nach Carlos Moreno, Schulen als Baustein — Ausschnitt aus DW REV" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Ausschnitt (ca. 15:20–17:07) aus der DW-REV-Dokumentation aus dem Hintergrund-Abschnitt oben — Carlos Moreno erklärt das Konzept und nennt selbst gleich die Kehrseite: Für manche Leute ist es eben doch keine 15-Minuten-, sondern eine Stunden-Stadt.</p>
+    <a class="next-link" href="#station-8">Weiter zu Station 8 →</a>
+  </section>
+
+  <!-- STATION 8 -->
+  <section class="station" id="station-8">
+    <h2><span class="station-num">8</span>La Caverne</h2>
+    <span class="tag tag-wirtschaft">Nachhaltiges Wirtschaften</span>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Parking%20Raymond%20Queneau%2C%2075018%20Paris" target="_blank" rel="noopener">📍 Auf Google Maps öffnen</a></p>
+    <p>Bio-Pilze und Chicorée wachsen in einer ehemaligen Tiefgarage, verkauft direkt an die Nachbarschaft — Kreislaufwirtschaft und kurze Lieferketten zum Anfassen. Der Innenbereich ist vermutlich nur mit Anmeldung/Führung zugänglich — <strong>vor der Reise klären</strong>, sonst reicht auch die Fassade plus Erklärung.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/OGm3L9YAzqA" title="Ces champignons made in Paris poussent dans un ancien parking souterrain" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="video-note">Le Nouvel Obs, Französisch, Reportage-Format.</p>
+    <a class="next-link" href="#synthese">Weiter zum Abschluss →</a>
+  </section>
+
+  <!-- SYNTHESE -->
+  <section class="station synthesis" id="synthese">
+    <h2><span class="station-num">🏁</span>Café-Abschluss</h2>
+    <span class="tag tag-wirtschaft">Das grosse Bild</span>
+    <p>Kein Ort auf der Karte, sondern der Moment, alles zusammenzubinden — Vorschlag: ein Café am Place Jules Joffrin, flach und ruhig, keine zehn Minuten von La Caverne entfernt.</p>
+    <p><a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Place%20Jules%20Joffrin%2C%2075018%20Paris" target="_blank" rel="noopener">📍 Vorschlag: Place Jules Joffrin</a></p>
+    <div class="critical">
+      <p class="label">Zu Montmartre/Sacré-Cœur</p>
+      <p>Bewusst nicht mehr Teil der Route: laut Stadt Paris selbst einer der beiden steilsten Velo-Anstiege der Stadt (Rue de Ravignan bis 13,6% Steigung) — von der Stadt als Kraftakt mit Verschnaufpausen beworben, nicht als normale Strecke. Falls am Ende noch Energie da ist: Velos am Fuss des Hügels abschliessen und die letzten Meter zu Fuss zum Sacré-Cœur laufen, statt hochzuradeln.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Privates Projekt für eine Velotour mit Papa, September 2026 · Paris<br>
+  🥗🍺 <a href="karte-vegan-bier.html" style="color:inherit;">Karte: Vegan & Bier</a><br>
+  Gebaut mit Claude · Stand: 2026-08-28
+</footer>
+
+</body>
+</html>
