@@ -2,9 +2,9 @@
 
 Private Fahrrad-Stadtführung durch Paris (halber Tag, Start am Hotel PiaPia + 10 Stationen, plus eine reine Info-Erwähnung ohne Halt) zu Klimaschutz, Klimaanpassung und nachhaltigem Wirtschaften — für eine Reise Anfang September 2026.
 
-`index.html` ist self-contained bis auf zwei lokale Bilder (kein Build-Schritt, keine externen Abhängigkeiten ausser YouTube-Embeds und den beiden Station-10-Fotos `flocon_before.png`/`flocon_after.png`) und läuft direkt im Handy-Browser. Dazu kommt `karte-vegan-bier.html`, eine separate Leaflet/OpenStreetMap-Karte mit veganen Restaurants und Bierlokalen (braucht Internet für Kartenkacheln) — beide Seiten verlinken sich gegenseitig.
+`index.html` ist self-contained bis auf zwei lokale Bilder (kein Build-Schritt, keine externen Abhängigkeiten ausser YouTube-Embeds und den beiden Station-9-Fotos `flocon_before.png`/`flocon_after.png`) und läuft direkt im Handy-Browser. Dazu kommen zwei separate Leaflet/OpenStreetMap-Karten (brauchen Internet für Kartenkacheln), beide mit `index.html` gegenseitig verlinkt: `karte-vegan-bier.html` (vegane Restaurants und Bierlokale) und `karte-uebersicht.html` (alle 10 Stationen + Start/Ausklang auf einer Karte, mit verbindender Linie und Popup-Links zurück zur jeweiligen Station).
 
-> **Zur Stationen-Nummerierung**: Die Nummern haben sich über mehrere Sessions mehrfach verschoben (zuletzt am 2026-08-30 durch die neue Station 1, die Verschiebung der Petite-Ceinture-Station auf Platz 2, und danach auch von Bassin d'Austerlitz auf Platz 3). Alle älteren, datierten Changelog-Einträge weiter unten verwenden jeweils die zu ihrem Zeitpunkt gültige Nummerierung, nicht die aktuelle — nur Checkliste, Struktur-Abschnitt und Überblick oben sind auf dem aktuellen Stand.
+> **Zur Stationen-Nummerierung**: Die Nummern haben sich über viele Sessions immer wieder verschoben. **Aktueller Stand (2026-09-12, mehrfach am selben Tag geändert):** 1 Tour de la Biodiversité, 2 Petite Ceinture (13e), 3 École Damesme, 4 Bassin d'Austerlitz, 5 Rue de Rivoli, 6 Forêt urbaine Hôtel de Ville, 7 Voie Georges Pompidou, 8 Seine bei Notre-Dame, 9 Rue Ferdinand-Flocon, 10 La Recyclerie, danach Ausklang "Pétanque et Bière" bei BarOurcq. Frühere Stände hatten zusätzlich oder stattdessen: Square Charles Péguy (früher Station 1, ganz gestrichen), École Keller (früher Station 8, ganz gestrichen), Bassin d'Austerlitz zeitweise ganz ersetzt durch die Tour de la Biodiversité (beide sind jetzt getrennte Stationen), sowie einen Ausklang "Vegan & Bier" statt "Pétanque et Bière". Die vollständige Historie steht in den datierten Changelog-Abschnitten weiter unten — diese verwenden jeweils die zu ihrem Zeitpunkt gültige Nummerierung, nicht die aktuelle. Nur Checkliste, Struktur-Abschnitt und Überblick oben sind auf dem aktuellen Stand.
 
 ## Live schalten (GitHub Pages)
 
@@ -23,36 +23,34 @@ Private Fahrrad-Stadtführung durch Paris (halber Tag, Start am Hotel PiaPia + 1
 
 ## Checkliste vor der Reise
 
-- [ ] **Petite Ceinture 13e (Station 2)**: vermutlich nicht befahrbar innerhalb des Jardins — Velos am Eingang (34 Boulevard Kellermann oder 60 Rue Damesme) abstellen, kurzes Stück zu Fuss
-- [ ] **La Recyclerie (Station 9)**: Öffnungszeiten/Programm (Restaurant, Ferme, Werkstatt) vorher auf larecyclerie.com checken, nicht alles ist immer gleichzeitig zugänglich
-- [ ] **École Keller (Station 8)**: nur samstags 10–19 Uhr öffentlich zugänglich — Tourdatum darauf abstimmen
-- [ ] **Square Charles Péguy (Station 1)**: Öffnungszeiten im September laut Stadt Paris Mo–Fr 8–19:30, Sa/So 9–19:30 Uhr — für den Tourstart am Nachmittag unkritisch, aber gegenchecken
+- [ ] **Petite Ceinture 13e (Station 2)**: vermutlich nicht befahrbar innerhalb des Jardins — Velos bei der Place Jean Delay abstellen, rund 200 m zu Fuss über die Rue de l'Interne-Loeb zum Eingang an der Rue Damesme
+- [ ] **La Recyclerie (Station 10)**: Öffnungszeiten/Programm (Restaurant, Ferme, Werkstatt) vorher auf larecyclerie.com checken, nicht alles ist immer gleichzeitig zugänglich
 - [ ] Alle 7 eingebetteten Videos einmal kurz antesten (sind über die YouTube-oEmbed-API als existierend/einbettbar verifiziert, aber nie selbst abgespielt worden)
 - [ ] Alle 7 eingebetteten Vorher/Nachher- und Einzelfotos einmal laden lassen — beim Testen wurde eines (Wikimedia Commons, Station 6 "Nachher") wiederholt mit HTTP 429 (Rate-Limit) blockiert; der Bildinhalt selbst wurde vorher visuell verifiziert, das Laden im Browser sollte aber trotzdem einmal bestätigt werden
 - [ ] Mobile Daten: die Videos brauchen Internet — Route funktioniert aber auch ohne, alle Kerninhalte stehen als Text auf der Seite
 - [ ] Bike-Route vorher einmal am Rechner durchklicken (Link "Ganze Route in Google Maps öffnen" oben auf der Seite)
-- [x] **Velo-Infrastruktur segmentweise geprüft (2026-08-30, via Websuche zu Pariser Radwegen)** — Gesamtbild: die Tour liegt über weite Strecken auf offiziellen Pariser Rad-Hauptachsen, nur noch ein Abschnitt ist wirklich unsicher:
-  - Hotel → Station 1 (Charles Péguy, 20e→12e, ~2–3 km): nicht einzeln geprüft, aber vermutlich unproblematisch — Cours de Vincennes/Avenue du Trône (direkte Verbindung Nation→Bel-Air) gehört laut Setec-Referenzliste zu den bereits realisierten Pariser Radwegprojekten.
-  - Station 1 → 2 (Charles Péguy → Petite Ceinture/Kellermann, via Boulevards des Maréchaux): **gut** — liegt auf der Linie v10 (benannt "Petite Ceinture") des Réseau Vélo Île-de-France (früher RER Vélo), durchgehender Radweg. Einzige bekannte Lücke ist weit entfernt bei der Pont du Garigliano im Westen, betrifft uns nicht.
-  - Station 2 → 3 (Kellermann → Bassin d'Austerlitz, quer durch den 13e): **gemischt** — Boulevard Vincent-Auriol hat einen Radweg (aus einem Bürgerhaushalts-Projekt), die naheliegendere Avenue des Gobelins gilt laut Anwohner-Radinitiative (MDB Paris 13) weiterhin als "fahrradfeindlich". Route deshalb explizit über Boulevard Vincent-Auriol geführt (neuer Wegpunkt im Maps-Link).
-  - Station 3 → 4 (Bassin d'Austerlitz → Rivoli via Sorbonne/Quartier Latin): **gut** — Boulevard Saint-Michel hat einen frisch gebauten, geschützten Zweirichtungs-Radweg (Bauphasen-PDF der Stadt Paris), explizit auch im Abschnitt Rue des Écoles/Sorbonne. Boulevard Sébastopol/Saint-Michel ist eine der vier grossen Nord-Süd-Radachsen von Paris.
-  - Station 4–7 (Rivoli → Forêt urbaine → Voie Georges Pompidou → Seine): **gut**, wie bisher — liegt auf den beiden anderen der vier Pariser Rad-Hauptachsen (Rivoli Ost-West, Seine-Kais beidseitig).
-  - Station 7 → 8 (Seine/Notre-Dame → École Keller, 4e→11e, neue Verbindung seit der Umstellung von Bassin d'Austerlitz): **teilweise unsicher** — Rue Saint-Antoine hat seit 2017 einen Zweirichtungs-Radweg bis Place de la Bastille (neuer Wegpunkt im Maps-Link); von dort weiter über Rue de la Roquette, wo laut Paris en Selle (Stand Juni 2026) eine "vélorue" erst geplant/im Bau ist — Fertigstellung bis September 2026 nicht garantiert. **Bleibt die grösste offene Unsicherheit der Tour.**
-  - Station 8 → 9 (École Keller → La Recyclerie, via Canal Saint-Martin/Boulevard Magenta): **gut**, wie bisher — Boulevard Magenta (Barbès–République) ist einer der meistgenutzten Radwege von Paris, seit 2020 durchgehend grün markiert; Canal-Saint-Martin-Promenade ist die vierte der vier Pariser Rad-Hauptachsen.
+- [ ] **Velo-Infrastruktur, Stand 2026-09-12** (die ursprüngliche Prüfung vom 2026-08-30 bezog sich auf eine seither mehrfach umgebaute Stationsreihenfolge und ist nicht mehr zuverlässig, siehe Nummerierungs-Hinweis ganz oben; hier neu zusammengefasst, teils nicht neu recherchiert):
+  - Hotel → Station 1 (Tour de la Biodiversité, 20e→13e) und Station 1→2 (Tour de la Biodiversité → Petite Ceinture, quer durch den 13e von Ost nach West): beide neu in dieser Reihenfolge und nicht im Detail geprüft — vor Ort live navigieren.
+  - Station 2→3 (Petite Ceinture → École Damesme): dicht beieinander im selben 13e-Cluster (Kellermann/Damesme), kein Umweg.
+  - Station 2/3→4 (weiter Richtung Bassin d'Austerlitz): lieber über Boulevard Vincent-Auriol als über die Avenue des Gobelins — Letztere gilt laut Anwohner-Radinitiative (MDB Paris 13) weiterhin als fahrradfeindlich.
+  - Station 4→5 (Bassin d'Austerlitz → Rivoli, via Sorbonne/Quartier Latin): **gut** — Boulevard Saint-Michel hat dort einen frisch gebauten, geschützten Zweirichtungs-Radweg (Bauphasen-PDF der Stadt Paris), eine der vier grossen Nord-Süd-Radachsen von Paris.
+  - Station 5–8 (Rivoli → Forêt urbaine → Voie Georges Pompidou → Seine): **gut**, wie bisher — liegt auf den beiden anderen der vier Pariser Rad-Hauptachsen (Rivoli Ost-West, Seine-Kais beidseitig).
+  - Station 8→9 (Seine → Rue Ferdinand-Flocon, 4e→18e): vom Nutzer korrigierte Wegführung (2026-09-12) über Place de la Bastille, Boulevard Richard-Lenoir und Rue des Récollets — vorgegeben, nicht selbst mit Quellen geprüft.
+  - Station 9→10 (Rue Ferdinand-Flocon → La Recyclerie): kurz, beide im selben 18e-Cluster rund um Ornano/Jules Joffrin/Château Rouge — Distanz grob geschätzt, nicht kartografisch nachgemessen.
+  - Station 10 → Ausklang (La Recyclerie, 18e → BarOurcq, 19e, Canal de l'Ourcq): vom Nutzer korrigierte Wegführung (2026-09-12) über Boulevard Barbès und Boulevard de la Chapelle — vorgegeben, nicht selbst mit Quellen geprüft. Grösster Einzelsprung der ganzen Tour, rund 15–20 Minuten Velo.
   
-  Der Maps-Link nimmt trotzdem irgendeine von Google vorgeschlagene Route — an der Roquette/Bastille-Stelle und generell wegen Baustellen am Tourtag live navigieren.
-- [ ] **Neu, Station 9 → 10 → Ausklang (alle im 18e, rund um Ornano/Jules Joffrin/Château Rouge)**: Distanzen zwischen La Recyclerie, Rue Ferdinand-Flocon, Urban Greener und Le Supercoin sind grob geschätzt, nicht kartografisch nachgemessen — sollten aber alle im selben kleinen Quartier liegen, kein grosser Umweg zu erwarten.
+  Der Maps-Link nimmt trotzdem irgendeine von Google vorgeschlagene Route — generell wegen Baustellen am Tourtag live navigieren.
 - [x] **Vélib'-Station am Hotel verifiziert (2026-08-28)**: heisst "Pyrénées - Avron", liegt laut offiziellem GBFS-Live-Feed (velib-metropole-opendata.smovengo.cloud) nur ~5 m von 73 Rue des Pyrénées entfernt, 32 Docks bestätigt, Station ist installiert und aktiv (`is_installed`/`is_renting` = 1). Bleibt trotzdem sinnvoll, die Radverfügbarkeit kurz vor Abfahrt in der App zu checken — die schwankt stündlich (beim Test: 0 Räder, aber 32 freie Docks).
 - [ ] **Neu, Station 6 (Voie Georges Pompidou)**: Kartenpunkt "Pont Louis-Philippe" ist eine Näherung für den Startpunkt der autofreien Uferpromenade, nicht selbst vor Ort geprüft — sollte aber unkritisch sein, da die ganze Strecke Hôtel de Ville → Pont Marie ohnehin am Wasser entlangführt.
 - [ ] Montmartre/Sacré-Cœur ist bewusst nicht mehr Teil der Route (Rue de Ravignan bis 13,6% Steigung, offiziell eine der zwei steilsten Veloachsen von Paris) — falls gewünscht, Velos am Fuss abschliessen und zu Fuss hoch
 
 ## Struktur
 
-Jede Station: Kartenlink → Kontext-Text → Video oder Vorher/Nachher-Fotos (wo vorhanden). Themen farblich codiert: grün = Klimaschutz, blau = Klimaanpassung, orange = nachhaltiges Wirtschaften. Seit 2026-08-30 gibt es an zwei Stellen (Hintergrund, Ausklang) gezielt gesetzte Diskussionsboxen (türkis, "💬") zu Gentrifizierung/Mietsteigerung und der "Ist es genug?"-Frage — auf expliziten Wunsch, als bewusste Ausnahme von der vorherigen Entscheidung gegen Diskussionsfragen-Prompts. Eine zwischenzeitlich bei École Keller zusätzlich gesetzte "Geprüft"-Box und Diskussionsbox wurden noch am selben Tag wieder entfernt — ihr Inhalt (Rue Keller ist keine "rue aux écoles") lebt jetzt implizit im Kontrast zu Station 10 weiter. Drei weitere orange "Zum Nachdenken"-Boxen (Miyawaki-Kritik, Voie-Georges-Pompidou-Kontroverse, Montmartre-Hinweis) wurden ebenfalls auf Wunsch entfernt; übrig sind nur noch die Hintergrund-Box "Wer zahlt für die Verkehrswende?" und die "Ungeprüft"-Box im Start-Abschnitt.
+Jede Station: Kartenlink → Kontext-Text → Video oder Vorher/Nachher-Fotos (wo vorhanden). Themen farblich codiert: grün = Klimaschutz, blau = Klimaanpassung, orange = nachhaltiges Wirtschaften. Seit 2026-08-30 gibt es an zwei Stellen gezielt gesetzte Diskussionsboxen (türkis, "💬") zu Gentrifizierung/Mietsteigerung und der "Ist es genug?"-Frage — auf expliziten Wunsch, als bewusste Ausnahme von der vorherigen Entscheidung gegen Diskussionsfragen-Prompts. Die Gentrifizierungs-Box ("Grün macht teuer") sass ursprünglich im Hintergrund-Abschnitt, wurde am 2026-09-12 aber zu Station 2 (Petite Ceinture) verschoben — dort ist auf der Tour tatsächlich Zeit zum Diskutieren, im Hintergrund-Abschnitt (noch vor der Abfahrt) weniger. Die Schlussdiskussion "Ist es genug?" bleibt im Ausklang. Eine zwischenzeitlich bei École Keller zusätzlich gesetzte "Geprüft"-Box und Diskussionsbox wurden noch am selben Tag wieder entfernt — ihr Inhalt (Rue Keller ist keine "rue aux écoles") lebte danach implizit im Kontrast zur (damaligen) Station 10 weiter. Die École-Keller-Station selbst wurde am 2026-09-12 (nach der Reise) ganz gestrichen; die neue Station "École Damesme" wurde zunächst mit demselben "nicht jede Schulstrasse ist offiziell gelistet"-Gedanken geschrieben, bis sich noch am selben Tag herausstellte, dass Rue Damesme entgegen der ursprünglichen Prüfung (Mairie du 13e) laut offizieller Stadt-Paris-Liste ("57 nouvelles rues aux écoles") sehr wohl gelistet ist — der Text wurde entsprechend korrigiert (siehe Abschnitt "École Damesme-Korrektur" weiter unten). Drei weitere orange "Zum Nachdenken"-Boxen (Miyawaki-Kritik, Voie-Georges-Pompidou-Kontroverse, Montmartre-Hinweis) wurden ebenfalls auf Wunsch entfernt; übrig sind nur noch die Hintergrund-Box "Wer zahlt für die Verkehrswende?" und die "Ungeprüft"-Box im Start-Abschnitt.
 
-Vorher/Nachher-Fotos (Stationen 4 Rivoli, 5 Forêt urbaine, 6 Voie Georges Pompidou, 10 Rue Ferdinand-Flocon) stammen aus frei lizenzierten Quellen (Wikimedia Commons, CC BY/CC BY-SA) oder von der Stadt Paris (offizielle Pressefotos) — keine Bloomberg/Getty-Bilder, da deren Fotos redaktionell lizenziert sind. Station 8 (École Keller) hat ein echtes Foto dieser Schule, aber kein Vorher-Bild. Für die Stationen 1 (Charles Péguy), 2 (Petite Ceinture 13e), 3 (Bassin d'Austerlitz), 9 (La Recyclerie) und die Info-Erwähnung La Caverne wurde kein brauchbares freies Vorher/Nachher-Material gefunden — dort bleibt es bei Text/Video bzw. reinem Text.
+Vorher/Nachher-Fotos (Stationen 5 Rivoli, 6 Forêt urbaine, 7 Voie Georges Pompidou, 9 Rue Ferdinand-Flocon) stammen aus frei lizenzierten Quellen (Wikimedia Commons, CC BY/CC BY-SA) oder von der Stadt Paris (offizielle Pressefotos) — keine Bloomberg/Getty-Bilder, da deren Fotos redaktionell lizenziert sind. Für die Stationen 1 (Tour de la Biodiversité, reiner Kurzhalt ohne Video/Foto), 2 (Petite Ceinture 13e), 3 (École Damesme, reiner Kurzhalt ohne Video/Foto), 4 (Bassin d'Austerlitz), 10 (La Recyclerie) und die Info-Erwähnung La Caverne wurde kein brauchbares freies Vorher/Nachher-Material gefunden bzw. bewusst keines gesucht — dort bleibt es bei Text/Video bzw. reinem Text.
 
-Station 10 (Rue Ferdinand-Flocon) ist ein Sonderfall: Die beiden Bilder (`flocon_before.png`, `flocon_after.png`) liegen als lokale Dateien im Projektordner statt extern verlinkt zu sein (dadurch beim `git add` und Pages-Deploy nicht vergessen — `.gitignore` schliesst nur `*.pdf` aus, PNGs sind nicht betroffen). Das Vorher-Bild ist ein Google-Street-View-Screenshot inkl. sichtbarer Bedienelemente (Kompass, Zoom, Mini-Karte unten links) — optisch nicht so sauber wie die anderen Vorher-Bilder, aber vom Nutzer bewusst so bereitgestellt. Das Nachher-Bild ist ein offizielles Ville-de-Paris-Pressefoto (Guillaume Bontemps).
+Station 9 (Rue Ferdinand-Flocon) ist ein Sonderfall: Die beiden Bilder (`flocon_before.png`, `flocon_after.png`) liegen als lokale Dateien im Projektordner statt extern verlinkt zu sein (dadurch beim `git add` und Pages-Deploy nicht vergessen — `.gitignore` schliesst nur `*.pdf` aus, PNGs sind nicht betroffen). Das Vorher-Bild ist ein Google-Street-View-Screenshot inkl. sichtbarer Bedienelemente (Kompass, Zoom, Mini-Karte unten links) — optisch nicht so sauber wie die anderen Vorher-Bilder, aber vom Nutzer bewusst so bereitgestellt. Das Nachher-Bild ist ein offizielles Ville-de-Paris-Pressefoto (Guillaume Bontemps).
 
 ## Station 3: Voie Georges Pompidou (neu, 2026-08-28)
 
@@ -124,6 +122,177 @@ Zwei konkrete Korrekturen an der Streckenführung: (1) Station 2→3 (Kellermann
 
 Nicht selbst vor Ort getestet, nur über Websuche recherchiert (Presseartikel, Mairie-Seiten, Radinitiativen wie Mieux se Déplacer à Bicyclette und Paris en Selle, sowie die offizielle Réseau-Vélo-Île-de-France-Seite) — keine Garantie für den exakten Zustand am Tourtag, Baustellen ändern sich laufend.
 
+## Station 3 ersetzt: Bassin d'Austerlitz → Tour de la Biodiversité (2026-09-12, nach der Reise)
+
+Auf Wunsch nach der eigentlichen Tour geändert (Revision für eine mögliche Wiederverwendung der Seite): Station 3 (Bassin d'Austerlitz, unterirdisches Regenwasser-Rückhaltebecken unter dem Square Marie-Curie) gestrichen, ersetzt durch einen bewusst kurzen Halt an der **Tour de la Biodiversité** (auch Tour M6B2 genannt), 1 Rue Albert Einstein, 75013 Paris — ganz in der Nähe, ebenfalls im Quartier Paris Rive Gauche/13e. 17-stöckiger Wohnturm von Architekt Édouard François: die Fassade ist mit röhrenartigen Elementen verkleidet, die wie Felsspalten funktionieren und in der Region gesammelte Wildpflanzen-Samen verwurzeln lassen — die Vegetation soll sich über Jahre von selbst über den Turm und in die Umgebung ausbreiten.
+
+Auf ausdrücklichen Wunsch **ohne grosse Beschreibung**: kein Video, kein Vorher/Nachher-Foto, nur ein kurzer Absatz — die Station ist als reiner "kurz hinschauen"-Halt gedacht, kein inhaltlicher Schwerpunkt wie die anderen Stationen.
+
+Folgeänderungen:
+- Tag von "Klimaanpassung" (blau) auf "Klimaschutz" (grün) geändert, konsistent mit den anderen beiden Petite-Ceinture/Biodiversitäts-Stationen (1 und 2).
+- Waypoint im "Ganze Route"-Maps-Link von "Square Marie Curie, 75013 Paris" auf "1 Rue Albert Einstein, 75013 Paris" geändert; der Zusatz-Waypoint "Sorbonne Université, 75005 Paris" entfernt, da der bisherige Abstecher via Quartier Latin/Sorbonne spezifisch mit der Nähe von Bassin d'Austerlitz zum Jussieu-Campus begründet war und auf die neue Station nicht mehr zutrifft.
+- Die im August geprüfte Velo-Infrastruktur-Aussage zu Boulevard Saint-Michel (Station 3→4) galt für den Sorbonne-Abstecher und ist damit hinfällig — als "nicht mehr im Detail geprüft" markiert statt stillschweigend stehen gelassen.
+- Überblick-Text (Start-Abschnitt) und Inhaltsverzeichnis entsprechend angepasst.
+- Nicht angepasst, da rein historisch: die datierten Changelog-Einträge weiter unten, die sich auf die alte Reihenfolge/Bassin d'Austerlitz beziehen, behalten bewusst den zum jeweiligen Zeitpunkt gültigen Stand (siehe Nummerierungs-Hinweis ganz oben).
+
+**Nachtrag, selben Tag:** Der Wegpunkt "Boulevard Vincent Auriol, 75013 Paris" (Station 2→3) im "Ganze Route"-Maps-Link entfernt — die unpräzise Adresse (ohne Hausnummer) liess Google Maps auf einen Punkt hinter der Métro-Station Nationale geocodieren, der für die Wegführung keinen Sinn ergab. Die Empfehlung, auf diesem Abschnitt Boulevard Vincent-Auriol statt der fahrradfeindlicheren Avenue des Gobelins zu nehmen, bleibt im Text bestehen, ist aber nicht mehr als Wegpunkt erzwungen — vor Ort selbst darauf achten.
+
+**Nachtrag, selben Tag (2):** Halt-Standort von Station 2 (Petite Ceinture 13e) präzisiert: statt "34 Boulevard Kellermann" jetzt exakt Place Jean Delay (48.8233160055962, 2.354307815457442) — Velos dort abstellen, dann rund 200 m zu Fuss über die Rue de l'Interne-Loeb zum eigentlichen Eingang an der Rue Damesme/Jardin de la Poterne des Peupliers. Map-Button der Station und Wegpunkt im "Ganze Route"-Link entsprechend auf die Koordinaten geändert.
+
+## École Keller gestrichen, neue Station 3: École Damesme (2026-09-12, nach der Reise)
+
+Station "École Keller — Cour Oasis" (zuletzt Station 8, 4 Rue Keller, 75011 Paris) auf Wunsch komplett gestrichen: begrünter Schulhof, 15-Minuten-Stadt-Bogen und der "rues aux écoles"-Exkurs sind damit aus der Tour raus.
+
+Dafür neue Station direkt nach der Petite Ceinture (Station 2) eingefügt, an den Koordinaten 48.82502321449237, 2.355381398187204 — das ist die **École élémentaire Damesme**, 5 Rue Damesme, unmittelbar neben dem Petite-Ceinture-Eingang. Vor dem Schreiben geprüft: laut offizieller Liste der Mairie du 13e ist die Rue Damesme **nicht** als "rue aux écoles" gelistet (gleicher Befund wie seinerzeit bei Rue Keller). Auf Wunsch ehrlich so benannt: die neue Station 3 macht genau diesen Punkt zum Inhalt (gewöhnliche Schulstrasse, kein Autoverkehrsverbot) und verweist auf die echte, offiziell gelistete "rue aux écoles" bei Station 10 (Rue Ferdinand-Flocon) — derselbe Kontrast wie zuvor bei École Keller, jetzt nur früher in der Tour platziert und ohne Bezug auf eine gelöschte Stationsnummer.
+
+Nummern-Kaskade dadurch: durch die Einfügung rutschten die alten Stationen 3–7 (Tour de la Biodiversité, Rivoli, Forêt urbaine, Voie Georges Pompidou, Seine) um je eins auf 4–8; durch die gleichzeitige Streichung der alten Station 8 (École Keller) rutschten die alten Stationen 9–10 (La Recyclerie, Rue Ferdinand-Flocon) per saldo wieder auf ihre ursprüngliche Nummer zurück. Total bleiben es zehn Stationen.
+
+Folgeänderungen:
+- Tag der neuen Station 3: "Klimaanpassung" (blau), passend zum Thema Schulstrassen/Verkehrsberuhigung (wie bei Station 10).
+- Station 10 (Rue Ferdinand-Flocon): Vergleichssatz "Anders als die Rue Keller bei Station 8..." entfernt, da er eine jetzt gelöschte Station beim Namen nannte. Beschreibt die Strasse jetzt eigenständig.
+- Wegpunkt im "Ganze Route"-Maps-Link: "4 Rue Keller, 75011 Paris" entfernt, neuer Wegpunkt für die Koordinaten der École Damesme eingefügt (zwischen Petite Ceinture und Tour de la Biodiversité).
+- **Zusätzlich entfernt:** der Wegpunkt "Place de la Bastille, 75004 Paris" — der sass nur dort, um die Strecke Seine → École Keller über die Rue-de-la-Roquette-"vélorue" zu führen. Ohne École-Keller-Halt ergibt der Umweg über Bastille/11e keinen Sinn mehr; die Strecke Seine → La Recyclerie läuft jetzt direkter, ist damit aber auch **nicht mehr im Detail auf Velo-Infrastruktur geprüft** (die früher recherchierten Befunde zu Rue Saint-Antoine/Bastille/Roquette und Boulevard Magenta bezogen sich auf den alten Umweg über College Keller und treffen auf die neue, direktere Strecke nicht mehr zu).
+- Überblick-Text (Start-Abschnitt): "12e und 13e"-Satz um École Damesme ergänzt, Erwähnung des 11e (galt nur für École Keller) entfernt.
+- Struktur-Abschnitt und Vorher/Nachher-Foto-Liste in diesem README entsprechend auf die neue Nummerierung angepasst.
+- Nicht angepasst, da rein historisch: ältere Changelog-Einträge, die sich auf die alte Nummerierung/École Keller beziehen (siehe Nummerierungs-Hinweis ganz oben).
+
+## Ausklang verlegt: Vegan & Bier → Pétanque et Bière bei BarOurcq (2026-09-12, selber Tag)
+
+Auf Wunsch Stationen 9 und 10 getauscht: **Rue Ferdinand-Flocon ist jetzt Station 9**, **La Recyclerie jetzt Station 10** — damit bleibt La Recyclerie weiterhin die letzte tatsächlich angefahrene Station direkt vor dem Ausklang, nur die beiden Stationen davor haben die Plätze getauscht. Die beiden liegen ohnehin im selben 18e-Cluster (rund um Ornano/Jules Joffrin), der Tausch ändert an der grossen Linie der Route nichts.
+
+Der Ausklang selbst wurde komplett ersetzt: statt "Vegan & Bier" (Urban Greener + Le Supercoin, beide nahe Rue Ferdinand-Flocon im 18e) jetzt **"Pétanque et Bière" bei BarOurcq**, 68 Quai de la Loire, 75019 Paris — direkt am Canal de l'Ourcq. Verifiziert: gratis Boule-Kugeln und Liegestühle für Konsumierende, bodenständige Bistroküche (Fish and Chips, Burger, Charcuterie), Öffnungszeiten Mi–So ab 15 Uhr (Quelle: Bar-Verzeichnisse/Tripadvisor, nicht offizielle Website — vor Ort nochmals prüfen).
+
+Geografische Konsequenz, bewusst in Kauf genommen: BarOurcq liegt rund 4–5 km von La Recyclerie entfernt (19e statt 18e) — mit Abstand der grösste Einzelsprung der ganzen Tour, gegenüber vorher (Ausklang-Cafés nur ~1 km von Station 10 entfernt). Nicht kartografisch nachgemessen, als eigener Checklisten-Punkt oben ergänzt.
+
+Folgeänderungen:
+- Ziel-Adresse im "Ganze Route"-Maps-Link von "Place Jules Joffrin, 75018 Paris" auf "68 Quai de la Loire, 75019 Paris" (BarOurcq) geändert; Wegpunkt-Reihenfolge für Stationen 9/10 getauscht.
+- TOC, Stationstitel/-nummern (h2, id, next-links) für die neuen Stationen 9 und 10 entsprechend getauscht.
+- Cross-Referenzen auf die alte Nummerierung korrigiert: Start-Abschnitt ("...später bei Station 9" → "...Station 10"), Station 1 ("bei Station 9 baut sie es professionell zum Tiers-Lieu um" → "Station 10"), Station 3/École Damesme ("Beispiel folgt später bei Station 10" → "Station 9").
+- Fussnote/Footer-Datum auf 2026-09-12 aktualisiert.
+- Die "Schlussdiskussion: Ist es genug?"-Box im Ausklang bleibt inhaltlich unverändert — sie ist unabhängig vom konkreten Lokal.
+- Nicht angepasst: `karte-vegan-bier.html` (die separate Vegan/Bier-Karte) — BarOurcq wurde dort nicht ergänzt, da nicht explizit gewünscht.
+
+## Charles Péguy gestrichen, Bassin d'Austerlitz wieder eingefügt (2026-09-12, selber Tag, Korrektur)
+
+Rückmeldung: Square Charles Péguy (damals Station 1) hätte gemäss dem Nutzer schon früher gestrichen werden sollen — das ergibt sich aus dieser Konversation nicht, wurde aber so umgesetzt. Gleichzeitig sollte Bassin d'Austerlitz (das am selben Tag zuvor explizit durch die Tour de la Biodiversité ersetzt worden war) **zusätzlich** zurückkommen, nicht die Tour de la Biodiversité ersetzen — auf Nachfrage geklärt.
+
+**Charles Péguy (Gemeinschaftsgärten, 21 Rue Rottembourg, 75012) komplett gestrichen.** Petite Ceinture rückt dadurch von Station 2 auf Station 1 vor und eröffnet die Tour jetzt direkt. Der "drei Zustände der Petite Ceinture"-Bogen (Eigenregie bei Charles Péguy / Natur überlassen bei Petite Ceinture / professionell bei La Recyclerie) ist damit auf zwei Zustände geschrumpft; der Verweis darauf in La Recycleries Text wurde entsprechend gekürzt und die Stationsnummer korrigiert (Petite Ceinture ist jetzt 1, nicht mehr 2).
+
+**Bassin d'Austerlitz als neue Station 4 wieder eingefügt**, mit dem ursprünglichen Inhalt (Regenwasser-Rückhaltebecken unter dem Square Marie-Curie, Video "la cathédrale souterraine") und dem ursprünglichen Sorbonne/Quartier-Latin-Übergang zu Rivoli — beides war beim Tausch gegen die Tour de la Biodiversité entfernt worden und ist jetzt wieder gültig, da Bassin d'Austerlitz geografisch sinnvoll direkt nach der Tour de la Biodiversité und vor Rivoli passt (Kellermann → École Damesme → Tour de la Biodiversité → Bassin d'Austerlitz/Jussieu → via Sorbonne → Rivoli, ohne grossen Umweg).
+
+Numerierungs-Kaskade dadurch (Netto-Effekt: weiterhin zehn Stationen, minus Charles Péguy, plus Bassin d'Austerlitz):
+
+| Alt (vor dieser Korrektur) | Neu |
+|---|---|
+| 1 Charles Péguy | *gestrichen* |
+| 2 Petite Ceinture | 1 Petite Ceinture |
+| 3 École Damesme | 2 École Damesme |
+| 4 Tour de la Biodiversité | 3 Tour de la Biodiversité |
+| *(nicht vorhanden)* | 4 Bassin d'Austerlitz *(neu eingefügt)* |
+| 5–10 (Rivoli … La Recyclerie) | unverändert 5–10 |
+
+Praktische Konsequenz: Stationen 5 bis 10 (Rivoli, Forêt urbaine, Voie Georges Pompidou, Seine, Rue Ferdinand-Flocon, La Recyclerie) behalten zufällig genau ihre bisherigen Nummern — nur die ersten vier Plätze haben sich geändert.
+
+Folgeänderungen:
+- Wegpunkt "21 Rue Rottembourg, 75012 Paris" (Charles Péguy) aus dem "Ganze Route"-Maps-Link entfernt; Wegpunkte "Square Marie Curie, 75013 Paris" und "Sorbonne Université, 75005 Paris" (Bassin d'Austerlitz + Sorbonne-Abstecher) wieder eingefügt, an der geografisch passenden Stelle zwischen Tour de la Biodiversité und Rivoli.
+- Start-Abschnitt: "12e und 13e" auf nur noch "13e" korrigiert (Charles Péguy/Rottembourg war der einzige 12e-Punkt), Bassin d'Austerlitz zur Aufzählung der 13e-Stationen ergänzt.
+- Velo-Infrastruktur-Box (Start-Abschnitt und README-Checkliste): komplett neu zusammengefasst, da mehrere Segment-Grenzen sich verschoben haben (Hotel→Station 1 jetzt ungeprüft statt vormals Charles-Péguy→Petite-Ceinture-Achse; Boulevard-Saint-Michel-Befund für Bassin d'Austerlitz→Rivoli wieder gültig).
+- Nummerierungs-Hinweis ganz oben komplett neu geschrieben (statt fortlaufend anzuwachsen): nennt jetzt direkt den aktuellen Stand plus eine Kurzzusammenfassung früherer Zwischenstände, statt jede einzelne Zwischenverschiebung im Fliesstext nachzuerzählen.
+- Nicht angepasst, da rein historisch: ältere Changelog-Einträge zu Charles Péguy und Bassin d'Austerlitz (z. B. "Petite Ceinture ausgebaut + neue Station 1: Square Charles Péguy", 2026-08-30) — sie beschreiben, was zum jeweiligen Zeitpunkt eingeführt wurde, nicht den heutigen Stand.
+
+## Erste drei 13e-Stationen umsortiert (2026-09-12, selber Tag)
+
+Auf Wunsch die Reihenfolge der ersten drei Stationen geändert: **Tour de la Biodiversité rückt auf Station 1 vor** (direkt ab dem Hotel), gefolgt von **Petite Ceinture (Station 2)** und **École Damesme (Station 3)**. Bassin d'Austerlitz bleibt unverändert Station 4, ebenso Stationen 5–10 danach.
+
+| Alt | Neu |
+|---|---|
+| 1 Petite Ceinture | 2 Petite Ceinture |
+| 2 École Damesme | 3 École Damesme |
+| 3 Tour de la Biodiversité | 1 Tour de la Biodiversité |
+| 4 Bassin d'Austerlitz | 4 Bassin d'Austerlitz (unverändert) |
+| 5–10 | unverändert |
+
+Geografisch bedeutet das: Hotel (20e) → Tour de la Biodiversité (13e, Ost, nahe BNF) → Petite Ceinture/École Damesme (13e, West, Kellermann/Damesme) → Bassin d'Austerlitz (13e, Nord, Jussieu) → weiter wie bisher via Sorbonne nach Rivoli. Damit quert die Route den 13e einmal zusätzlich von Ost nach West (Tour de la Biodiversité → Petite Ceinture) — spürbar, aber deutlich kleiner als der Seine-Umweg, der bei einem zuvor diskutierten, nicht umgesetzten Vorschlag entstanden wäre (Rivoli auf Platz 3 vorziehen, siehe vorheriger Diskussionspunkt in dieser Session, wurde verworfen).
+
+Folgeänderungen:
+- TOC, Wegpunkt-Reihenfolge im "Ganze Route"-Maps-Link (Tour de la Biodiversité jetzt vor Petite Ceinture/École Damesme) angepasst.
+- Tour de la Biodiversité: kurze Eröffnungsformulierung ergänzt ("Der erste Halt, gleich zu Beginn nur ein kurzer..."), da sie jetzt tatsächlich die erste Station ist. Bleibt bewusst minimal (kein Video/Foto), wie ursprünglich gewünscht.
+- Petite Ceinture: die frühere Eröffnungsformulierung ("Der erste Halt zeigt gleich...") entfernt, da sie nicht mehr die erste Station ist.
+- La Recyclerie: Verweis "dieselbe stillgelegte Ringbahn wie bei Station 1" auf "Station 2" korrigiert (Petite Ceinture).
+- Hintergrund-Abschnitt: Verweis "rues aux écoles, mehr dazu bei Station 8" (ein Überbleibsel von vor der École-Keller-Streichung, damals übersehen) korrigiert auf "Station 3 und 9".
+- Velo-Infrastruktur-Box (Start-Abschnitt und README-Checkliste) neu zusammengefasst: Hotel→Station 1 und Station 1→2 sind jetzt die ungeprüften, neuen Abschnitte; die Vincent-Auriol-Empfehlung gilt jetzt für "Station 2/3→4".
+- Nummerierungs-Hinweis ganz oben aktualisiert (Tour de la Biodiversité jetzt an erster Stelle).
+
+## École Damesme-Korrektur: doch eine offizielle "rue aux écoles" (2026-09-12, selber Tag)
+
+**Faktenkorrektur.** Die Prüfung für Station 3 (École Damesme) hatte sich auf die Seite `mairie13.paris.fr/pages/rues-aux-ecoles-13083` gestützt, die Rue Damesme nicht listete — daraus wurde geschlossen, die Strasse sei keine offizielle "rue aux écoles" (analog zum echten Befund bei Rue Keller/11e). Der Nutzer hat die vollständigere, offizielle Stadt-Paris-Quelle nachgereicht: `paris.fr/pages/57-nouvelles-rues-aux-ecoles-dans-paris-8197#arrondissement-13-vlx72` (verifiziert per Abruf) — dort ist **Rue Damesme** explizit für den 13e gelistet, Teil einer neueren Welle von 57 zusätzlichen Strassen. Die Mairie-du-13e-Seite war schlicht nicht vollständig/aktuell für diese Erweiterungswelle. Lehre: eine einzelne Bezirksseite reicht nicht als abschliessende Quelle für "ist X offiziell gelistet" — wo verfügbar, die zentrale Stadt-Paris-Übersichtsseite zuerst prüfen.
+
+**Textänderung Station 3 (École Damesme):** von "ehrlicher Realitätscheck, nicht gelistet" umgeschrieben zu "tatsächlich offiziell gelistet, Teil der 57er-Welle". Die allgemeinen Programm-Fakten (>300 Strassen seit 2020, rund 100 davon entsiegelt/bepflanzt, Stand September 2025 gut die Hälfte aller Vorschulen/Grundschulen) wurden von Station 9 hierher vorgezogen, da Station 3 jetzt chronologisch die erste "rue aux écoles" der Tour ist.
+
+**Textkürzung Station 9 (Rue Ferdinand-Flocon):** auf Wunsch gekürzt, da die allgemeine Programm-Einführung jetzt bei Station 3 steht. Bleibt: autofrei seit 1. September 2021, École maternelle (Nr. 3) und École élémentaire (Nr. 5) direkt an der Strasse, Sacré-Cœur-Blick, Bezug zur Republik-Reportage. Vorher/Nachher-Fotos (`flocon_before.png`/`flocon_after.png`) unverändert beibehalten, wie explizit gewünscht.
+
+Folgeänderungen:
+- TOC-Eintrag Station 3 von "eine ganz gewöhnliche Schulstrasse" auf "eine von über 300 rues aux écoles" korrigiert.
+- Struktur-Abschnitt oben entsprechend präzisiert (Verweis auf diesen Korrektur-Abschnitt ergänzt statt den überholten Kontrast-Gedanken fortzuschreiben).
+- Nicht angepasst, da rein historisch: der Abschnitt "École Keller gestrichen, neue Station 3: École Damesme" weiter oben beschreibt bewusst den (mittlerweile überholten) Stand zum Zeitpunkt seiner Entstehung, nicht den heutigen.
+
+## Diskussionsbox "Grün macht teuer" zu Station 2 verschoben (2026-09-12, selber Tag)
+
+Auf Wunsch die Diskussionsbox "💬 Diskussion: Grün macht teuer" (Gentrifizierung/Mietsteigerung, Republik-Zitate, drei Diskussionsfragen) vom Hintergrund-Abschnitt zu **Station 2 (Petite Ceinture)** verschoben — Begründung: dort hat die Gruppe tatsächlich Zeit zum Diskutieren, im Hintergrund-Abschnitt (noch am Hotel, vor der Abfahrt) eher nicht. Inhalt unverändert übernommen, nur die Verortung geändert; der Verweis "mehr dazu bei Station 3 und 9" im Boxtext bleibt gültig, unabhängig vom eigenen Standort der Box.
+
+Der Hintergrund-Abschnitt behält seine übrigen Inhalte (Zitate, Chart, Gelbwesten-Vergleichspunkt, Leselinks) unverändert; nur die Box selbst wurde entfernt. Die Ausklang-Box "Ist es genug?" bleibt unverändert am Schluss der Tour.
+
+Folgeänderung: Struktur-Abschnitt oben präzisiert (Box sitzt jetzt bei Station 2, nicht mehr im Hintergrund).
+
+## Routenkorrektur ab Pont Marie (2026-09-12, selber Tag)
+
+Auf Rückmeldung des Nutzers ("stimmt nicht") die Google-Maps-Wegführung ab Pont Marie (Station 8, Seine) korrigiert. Zwei Segmente betroffen:
+
+**Station 8→9 (Seine → Rue Ferdinand-Flocon):** neuer Wegpunktzug über Place de la Bastille, Boulevard Richard-Lenoir und Rue des Récollets — vom Nutzer vorgegeben, als Wegpunkte im "Ganze Route"-Link ergänzt (`Place de la Bastille, 75011 Paris`, `Boulevard Richard-Lenoir, 75011 Paris`, `Rue des Récollets, 75010 Paris`).
+
+**Station 10→Ausklang (La Recyclerie → BarOurcq):** neuer Wegpunktzug über Boulevard Barbès und Boulevard de la Chapelle — ebenfalls vom Nutzer vorgegeben, als Wegpunkte ergänzt (`Boulevard Barbès, 75018 Paris`, `Boulevard de la Chapelle, 75018 Paris`), platziert nach dem bestehenden Wegpunkt "83 Boulevard Ornano" (La Recyclerie) und vor dem Zielpunkt BarOurcq.
+
+Beide Korrekturen sind vom Nutzer vor Ort/aus Ortskenntnis vorgegeben, nicht zusätzlich mit Websuche verifiziert — Checkliste und Start-Abschnitt entsprechend als "vorgegeben, nicht selbst geprüft" markiert statt der vorherigen unspezifischen "nicht im Detail geprüft"-Formulierung.
+
+Folgeänderungen:
+- Velo-Infrastruktur-Box im Start-Abschnitt (`index.html`) und Checkliste hier aktualisiert.
+- Kein Stationswechsel, keine Umnummerierung — nur die Google-Maps-Wegpunkte zwischen bestehenden Stationen geändert.
+
+## "Ganze Route"-Link durch Einzelstrecken pro Etappe ersetzt (2026-09-12, selber Tag, Korrektur)
+
+**Ursache gefunden:** der Nutzer meldete "wird nicht korrekt abgebildet" für den grossen "Ganze Route"-Link. Recherche ergab: Googles `maps/dir/?api=1`-URL-Schema erlaubt laut offizieller Doku nur **9 Wegpunkte am Rechner und 3 auf dem Handy** zusätzlich zu Start/Ziel. Der bisherige Link hatte nach den heutigen Korrekturen 16 Wegpunkte — weit über beiden Limits, insbesondere für das Handy, auf dem diese Seite laut eigener Beschreibung ("läuft direkt im Handy-Browser") primär genutzt wird. Die vorherigen Änderungen an diesem Link (Wegpunkte hinzufügen/entfernen für Bassin d'Austerlitz, École Damesme, Barbès/Chapelle usw.) waren also von Anfang an auf ein grundsätzlich nicht tragfähiges Format aufgesattelt — das hätte früher auffallen sollen.
+
+**Lösung:** der einzelne "Ganze Route"-Button im Überblick-Abschnitt entfernt, ersetzt durch eine kurze Erklärung. Stattdessen bekommt **jeder Übergang zwischen zwei Stationen (11 insgesamt: Hotel→1 bis Station 10→Ausklang) einen eigenen kleinen "🚴 Strecke zur nächsten Station"-Link** (auf Wunsch so benannt statt "Strecke hierher"), platziert direkt vor dem jeweiligen "Weiter zu Station …"-Pfeil. Jede Einzelstrecke hat höchstens 3 Wegpunkte (die meisten 0–1), bleibt also auch auf dem Handy zuverlässig innerhalb des Limits:
+
+| Übergang | Wegpunkte |
+|---|---|
+| Hotel → 1 | keine |
+| 1 → 2, 2 → 3 | keine |
+| 3 → 4 | Boulevard Vincent-Auriol |
+| 4 → 5 | Sorbonne Université |
+| 5 → 6, 6 → 7, 7 → 8 | keine |
+| 8 → 9 | Place de la Bastille, Boulevard Richard-Lenoir, Rue des Récollets (3, Handy-Maximum) |
+| 9 → 10 | keine |
+| 10 → Ausklang | Boulevard Barbès, Boulevard de la Chapelle |
+
+Jede Station behält zusätzlich ihren eigenen, wegpunktfreien "📍 Auf Google Maps öffnen"-Pin-Link (unverändert, war nie vom Limit betroffen).
+
+Folgeänderungen:
+- Überblick-Abschnitt: Route-Button entfernt, durch Hinweistext auf die neuen Einzelstrecken-Links ersetzt.
+- Lehre für künftige Änderungen: Wegpunkte nie mehr in einen einzigen "Ganze Route"-Link häufen — ab jetzt grundsätzlich pro Etappe verlinken.
+
+## Neue Übersichtskarte ergänzt (2026-09-12, selber Tag)
+
+Auf Wunsch ("zu Beginn möchte ich eine Übersicht der ganzen Strecke") eine dritte Seite `karte-uebersicht.html` gebaut, nach demselben Leaflet/OpenStreetMap-Muster wie `karte-vegan-bier.html`: alle 10 Stationen plus Start (Hotel) und Ausklang (BarOurcq) als nummerierte, farbcodierte Marker (grün/blau/orange nach Themen-Tag, grau für Start/Ziel), verbunden durch eine gestrichelte Linie in Tour-Reihenfolge, damit die grobe Form der Route auf einen Blick sichtbar ist. Jeder Marker hat ein Popup mit Name, Thema und einem Link zurück zur jeweiligen Station in `index.html` (`index.html#station-N`).
+
+Koordinaten für Hotel, Rivoli, Hôtel de Ville, Pont Louis-Philippe, Pont Marie, Rue Ferdinand-Flocon, La Recyclerie und BarOurcq frisch per Nominatim/OpenStreetMap geocodiert (die anderen — Tour de la Biodiversité, Petite Ceinture, École Damesme, Bassin d'Austerlitz — waren bereits aus früheren Korrekturen exakt bekannt).
+
+Bewusst keine echte Fahrrad-Routenführung (Linien folgen nicht den Strassen) — das ist eine reine Übersicht/Orientierungshilfe, keine Navigationskarte. Für die tatsächliche Strassenführung bleiben die einzelnen "🚴 Strecke zur nächsten Station"-Links pro Etappe massgeblich.
+
+Folgeänderungen:
+- `index.html`, Überblick-Abschnitt: neuer Button "🗺️ Routen-Übersicht ansehen" ganz oben, verlinkt auf `karte-uebersicht.html` (neuer Tab).
+- Datei-Übersicht ganz oben in diesem README aktualisiert (jetzt zwei Zusatzkarten statt einer).
+
 ## Quellen
 
-Recherchiert Ende Juli/Anfang August 2026, siehe Chatverlauf für Einzel-Quellen (Ville de Paris, FRANCE 24, Brut, Le Nouvel Obs, INRAE-Kritik an der Miyawaki-Methode via tela-botanica.org/enlargeyourparis.fr, Mairie du 13e zur Petite Ceinture, Bloomberg CityLab und reporterre.net zur Voie Georges Pompidou). Ergänzt am 29./30.08.2026 um Republik, "Au revoir, Paris" (Kolly, 2026), paris.fr/Mairie du 11e/Mairie du 18e zum "rues aux écoles"-Programm, education.gouv.fr zu den Schulen an der Rue Ferdinand-Flocon, sowie paris-blog.org ("Die Petite Ceinture", Teil 1+2, 2020) und die offizielle paris.fr-Seite zu Square Charles Péguy für die neue Station 1 und den Ausbau der Petite-Ceinture-Station. Für die Konnektivitätsfrage (Porte de Choisy) zusätzlich mairie13.paris.fr und petiteceinture.org/ASPCRF (Statusbericht Dezember 2024). Für die Velo-Infrastruktur-Prüfung (30.08.2026) zusätzlich: rerv.fr und Wikipedia zum Réseau Vélo Île-de-France, mdb-idf.org (Mieux se Déplacer à Bicyclette, u. a. zur Avenue des Gobelins und den Boulevards des Maréchaux), mairie11.paris.fr/mairie12.paris.fr zu Boulevard Voltaire und Rue du Faubourg Saint-Antoine, parisenselle.fr zur "vélorue" Rue de la Roquette, cdn.paris.fr (Bauphasen-PDF Boulevard Saint-Michel), mairie10.paris.fr zu Boulevard Magenta, sowie parisjetaime.com zu den vier Pariser Rad-Hauptachsen.
+Recherchiert Ende Juli/Anfang August 2026, siehe Chatverlauf für Einzel-Quellen (Ville de Paris, FRANCE 24, Brut, Le Nouvel Obs, INRAE-Kritik an der Miyawaki-Methode via tela-botanica.org/enlargeyourparis.fr, Mairie du 13e zur Petite Ceinture, Bloomberg CityLab und reporterre.net zur Voie Georges Pompidou). Ergänzt am 29./30.08.2026 um Republik, "Au revoir, Paris" (Kolly, 2026), paris.fr/Mairie du 11e/Mairie du 18e zum "rues aux écoles"-Programm, education.gouv.fr zu den Schulen an der Rue Ferdinand-Flocon, sowie paris-blog.org ("Die Petite Ceinture", Teil 1+2, 2020) und die offizielle paris.fr-Seite zu Square Charles Péguy für die neue Station 1 und den Ausbau der Petite-Ceinture-Station. Für die Konnektivitätsfrage (Porte de Choisy) zusätzlich mairie13.paris.fr und petiteceinture.org/ASPCRF (Statusbericht Dezember 2024). Für die Velo-Infrastruktur-Prüfung (30.08.2026) zusätzlich: rerv.fr und Wikipedia zum Réseau Vélo Île-de-France, mdb-idf.org (Mieux se Déplacer à Bicyclette, u. a. zur Avenue des Gobelins und den Boulevards des Maréchaux), mairie11.paris.fr/mairie12.paris.fr zu Boulevard Voltaire und Rue du Faubourg Saint-Antoine, parisenselle.fr zur "vélorue" Rue de la Roquette, cdn.paris.fr (Bauphasen-PDF Boulevard Saint-Michel), mairie10.paris.fr zu Boulevard Magenta, sowie parisjetaime.com zu den vier Pariser Rad-Hauptachsen. Für die École-Damesme-Korrektur (12.09.2026) zusätzlich: paris.fr/pages/57-nouvelles-rues-aux-ecoles-dans-paris-8197 (vom Nutzer nachgereicht, per Abruf verifiziert). Für die Google-Maps-Wegpunkt-Limite (12.09.2026) zusätzlich: developers.google.com/maps/documentation/urls (offizielle Doku: 9 Wegpunkte am Rechner, 3 auf dem Handy für das `maps/dir/?api=1`-URL-Schema).

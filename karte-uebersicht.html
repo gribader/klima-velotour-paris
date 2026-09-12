@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routen-Übersicht — Klima-Velotour Paris</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+  :root {
+    --green: #2e7d32;
+    --blue: #1565c0;
+    --orange: #e65100;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --bg: #fdfdfb;
+    --border: #e2e2de;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink);
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: #fff;
+    padding: 1.1rem 1.2rem 0.9rem;
+    text-align: center;
+    position: relative;
+    z-index: 500;
+  }
+  header.hero h1 { margin: 0 0 0.2rem; font-size: 1.35rem; }
+  header.hero p { margin: 0; opacity: 0.95; font-size: 0.85rem; }
+  header.hero a { color: #fff; }
+
+  #map { position: absolute; top: 72px; left: 0; right: 0; bottom: 0; }
+
+  .legend {
+    position: absolute; top: 82px; right: 10px; z-index: 400;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    max-width: 150px;
+  }
+  .legend div { display: flex; align-items: center; gap: 0.4rem; margin: 0.15rem 0; }
+  .legend i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .popup-title { font-weight: 700; font-size: 1rem; margin: 0 0 0.2rem; }
+  .popup-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.03em; padding: 0.15rem 0.5rem; border-radius: 999px; color: #fff; margin-bottom: 0.35rem;
+  }
+  .popup-desc { font-size: 0.82rem; margin: 0.3rem 0 0.5rem; color: var(--ink-soft); }
+  .popup-link {
+    display: inline-block; font-size: 0.8rem; font-weight: 600;
+    color: #fff; background: #34a853; text-decoration: none;
+    padding: 0.35rem 0.7rem; border-radius: 8px;
+  }
+
+  .leaflet-div-icon { background: transparent; border: none; }
+  .marker-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    color: #fff; font-weight: 700; font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🗺️ Routen-Übersicht</h1>
+  <p>Alle 10 Stationen auf einen Blick — antippen für Details/Link zur Station</p>
+  <p style="margin-top:0.3rem;"><a href="index.html">← zur Klima-Velotour</a></p>
+</header>
+
+<div id="map"></div>
+<div class="legend">
+  <div><i style="background:#546e7a"></i> Start/Ziel</div>
+  <div><i style="background:#2e7d32"></i> Klimaschutz</div>
+  <div><i style="background:#1565c0"></i> Klimaanpassung</div>
+  <div><i style="background:#e65100"></i> Wirtschaften</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  const NEUTRAL = "#546e7a";
+  const GREEN = "#2e7d32";
+  const BLUE = "#1565c0";
+  const ORANGE = "#e65100";
+
+  const stops = [
+    { label: "H", name: "Start: Hotel PiaPia", lat: 48.8485826, lon: 2.4079073, color: NEUTRAL, tag: null, anchor: "start", desc: "14 Rue des Maraîchers, 75020 Paris" },
+    { label: "1", name: "Tour de la Biodiversité", lat: 48.8260604, lon: 2.3823019, color: GREEN, tag: "Klimaschutz", anchor: "station-1", desc: "Kurzer Halt: die grüne Fassade an der rue Albert Einstein." },
+    { label: "2", name: "Petite Ceinture (13e)", lat: 48.8233160055962, lon: 2.354307815457442, color: GREEN, tag: "Klimaschutz", anchor: "station-2", desc: "Die stillgelegte Ringbahn, der Natur überlassen." },
+    { label: "3", name: "École Damesme", lat: 48.82502321449237, lon: 2.355381398187204, color: BLUE, tag: "Klimaanpassung", anchor: "station-3", desc: "Eine von über 300 offiziellen 'rues aux écoles'." },
+    { label: "4", name: "Bassin d'Austerlitz", lat: 48.8402158, lon: 2.3620386, color: BLUE, tag: "Klimaanpassung", anchor: "station-4", desc: "Unterirdisches Regenwasser-Rückhaltebecken unter dem Square Marie-Curie." },
+    { label: "5", name: "Rue de Rivoli", lat: 48.8572180, lon: 2.3526354, color: GREEN, tag: "Klimaschutz", anchor: "station-5", desc: "Die meistbefahrene Velo-Achse von Paris, seit 2024 autofrei." },
+    { label: "6", name: "Forêt urbaine Hôtel de Ville", lat: 48.8564459, lon: 2.3508981, color: BLUE, tag: "Klimaanpassung", anchor: "station-6", desc: "Stadtwald vorm Rathaus, Miyawaki-Methode." },
+    { label: "7", name: "Voie Georges Pompidou", lat: 48.8538310, lon: 2.3544015, color: GREEN, tag: "Klimaschutz", anchor: "station-7", desc: "Ehemalige Uferschnellstrasse, heute Fuss-/Velopromenade." },
+    { label: "8", name: "Seine bei Notre-Dame", lat: 48.8537872, lon: 2.3565905, color: BLUE, tag: "Klimaanpassung", anchor: "station-8", desc: "Seit Sommer 2025 wieder offiziell schwimmbar." },
+    { label: "9", name: "Rue Ferdinand-Flocon", lat: 48.8914461, lon: 2.3458919, color: BLUE, tag: "Klimaanpassung", anchor: "station-9", desc: "Eine echte, offiziell gelistete 'rue aux écoles' mit Vorher/Nachher-Fotos." },
+    { label: "10", name: "La Recyclerie", lat: 48.8976218, lon: 2.3440598, color: ORANGE, tag: "Nachhaltiges Wirtschaften", anchor: "station-10", desc: "Altes Bahnhofsgebäude, umgebaut zu Restaurant, Werkstatt und Stadtfarm." },
+    { label: "🏁", name: "Ausklang: BarOurcq", lat: 48.8864617, lon: 2.3772350, color: NEUTRAL, tag: null, anchor: "synthese", desc: "Pétanque et Bière am Canal de l'Ourcq." }
+  ];
+
+  const map = L.map('map', { zoomControl: true }).setView([48.868, 2.362], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> Mitwirkende'
+  }).addTo(map);
+
+  L.polyline(stops.map(s => [s.lat, s.lon]), {
+    color: '#4a4a4a', weight: 3, opacity: 0.55, dashArray: '6, 8'
+  }).addTo(map);
+
+  stops.forEach(s => {
+    const icon = L.divIcon({
+      className: 'leaflet-div-icon',
+      html: `<div class="marker-num" style="background:${s.color}">${s.label}</div>`,
+      iconSize: [26, 26],
+      iconAnchor: [13, 13],
+      popupAnchor: [0, -14]
+    });
+    const tagHtml = s.tag ? `<span class="popup-tag" style="background:${s.color}">${s.tag}</span><br>` : '';
+    const popupHtml = `
+      <div class="popup-title">${s.name}</div>
+      ${tagHtml}
+      <div class="popup-desc">${s.desc}</div>
+      <a class="popup-link" href="index.html#${s.anchor}">→ Zur Station</a>
+    `;
+    L.marker([s.lat, s.lon], { icon }).addTo(map).bindPopup(popupHtml);
+  });
+</script>
+
+</body>
+</html>
